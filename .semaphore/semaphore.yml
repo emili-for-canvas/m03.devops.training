@@ -82,6 +82,9 @@ blocks:
         - name: 'Job #1'
           commands:
             - cd 5-dast
+            - sudo apt update && sudo apt install -y python3.12-venv
+            - python3.12 -m venv venv
+            - source venv/bin/activate
             - pip install -r requirements.txt
             - pip install wapiti3
             - 'gunicorn -b 0:0:0:0:4000 app:app --daemon'
