@@ -75,3 +75,15 @@ blocks:
             - cd 4-sast
             - pip install bandit
             - bandit -r vulnerable_script.py
+  - name: 'Block #6'
+    dependencies: []
+    task:
+      jobs:
+        - name: 'Job #1'
+          commands:
+            - cd 5-dast
+            - pip install -r requirements.txt
+            - pip install wapiti3
+            - 'gunicorn -b 0:0:0:0:4000 app:app --daemon'
+            - 'wapiti -u http://localhost:4000 -f html'
+            - artifact push workflow /root/.wapiti/generated_report
