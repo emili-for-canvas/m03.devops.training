@@ -44,9 +44,8 @@ blocks:
             - gpg --verify artifact.txt.sig artifact.txt
       secrets:
         - name: SignKey
-  - name: 'Block #3'
-    dependencies:
-      - Verify
+  - name: Sbom
+    dependencies: []
     task:
       jobs:
         - name: 'Job #1'
@@ -54,7 +53,7 @@ blocks:
             - cd 2-sbom
             - pip install cyclonedx-bom
             - cyclonedx-py requirements -o bom.json
-  - name: 'Block #4'
+  - name: Dep-Scan
     dependencies: []
     task:
       jobs:
@@ -66,7 +65,7 @@ blocks:
             - source venv/bin/activate
             - pip install pip-audit
             - pip-audit -r requirements.txt
-  - name: 'Block #5'
+  - name: sast
     dependencies: []
     task:
       jobs:
@@ -75,7 +74,7 @@ blocks:
             - cd 4-sast
             - pip install bandit
             - bandit -r vulnerable_script.py
-  - name: 'Block #6'
+  - name: dast
     dependencies: []
     task:
       jobs:
@@ -89,5 +88,5 @@ blocks:
             - pip install wapiti3
             - 'gunicorn -b 0:0:0:0:4000 app:app --daemon'
             - 'wapiti -u http://localhost:4000 -f html'
-            - sudo cp /root/.wapiti/generated_report ./generated_report
+            - sudo cp /home/semaphore/.wapiti/generated_report ./generated_report
             - artifact push workflow generated_report
