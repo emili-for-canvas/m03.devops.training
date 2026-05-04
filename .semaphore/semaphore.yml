@@ -39,6 +39,7 @@ blocks:
           commands:
             - cd 1-signing
             - artifact pull workflow artifact.txt.sig
+            - gpg --import /home/semaphore/public.key
             - gpg --verify artifact.txt.sig artifact.txt
       secrets:
         - name: SignKey
