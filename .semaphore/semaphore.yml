@@ -66,3 +66,12 @@ blocks:
             - source venv/bin/activate
             - pip install pip-audit
             - pip-audit -r requirements.txt
+  - name: 'Block #5'
+    dependencies: []
+    task:
+      jobs:
+        - name: 'Job #1'
+          commands:
+            - cd 4-sast
+            - pip install bandit
+            - bandit -r vulnerable_script.py
