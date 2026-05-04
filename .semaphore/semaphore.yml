@@ -43,3 +43,20 @@ blocks:
             - gpg --verify artifact.txt.sig artifact.txt
       secrets:
         - name: SignKey
+  - name: 'Block #3'
+    dependencies:
+      - Verify
+    task:
+      jobs:
+        - name: 'Job #1'
+          commands:
+            - cd 2-sbom
+            - pip install cyclonedx-bom
+            - cyclonedx-py requirements -o bom.json
+  - name: 'Block #4'
+    dependencies:
+      - 'Block #3'
+    task:
+      jobs:
+        - name: 'Job #1'
+          commands: []
