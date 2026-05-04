@@ -89,4 +89,5 @@ blocks:
             - pip install wapiti3
             - 'gunicorn -b 0:0:0:0:4000 app:app --daemon'
             - 'wapiti -u http://localhost:4000 -f html'
-            - artifact push workflow /root/.wapiti/generated_report
+            - sudo cp /root/.wapiti/generated_report ./generated_report
+            - artifact push workflow generated_report
